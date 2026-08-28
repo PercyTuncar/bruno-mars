@@ -8,6 +8,7 @@ import { JsonLd } from '@/components/seo/JsonLd'
 import { buildCountryEventSchema, buildFAQSchema, buildBreadcrumbSchema } from '@/lib/seo/jsonld'
 import { Breadcrumbs } from '@/components/seo/Breadcrumbs'
 import { Navbar } from '@/components/layout/Navbar'
+import { WhatsAppModal } from '@/components/modals/WhatsAppModal'
 import { formatCurrency } from '@/lib/format-currency'
 import { getPriceRange } from '@/data/zones'
 import { Calendar, MapPin, Ticket, ArrowRight, Users, Clock, Zap, Star } from 'lucide-react'
@@ -42,6 +43,11 @@ export default async function CountryPage({ params }: { params: Promise<{ pais: 
         { name: config.name, url: `${baseUrl}/${countrySlug}` },
       ])} />
       <Navbar />
+      <WhatsAppModal
+        countrySlug={countrySlug}
+        countryName={config.name}
+        language={config.language}
+      />
 
       {/* Hero Ultra Compacto y Poderoso */}
       <section className="relative h-screen max-h-[90vh] flex items-center overflow-hidden">

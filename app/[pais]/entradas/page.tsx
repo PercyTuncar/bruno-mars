@@ -7,6 +7,7 @@ import { JsonLd } from '@/components/seo/JsonLd'
 import { buildCountryEventSchema, buildBreadcrumbSchema } from '@/lib/seo/jsonld'
 import { Navbar } from '@/components/layout/Navbar'
 import { TicketsPageClient } from '@/components/tickets/TicketsPageClient'
+import { WhatsAppModal } from '@/components/modals/WhatsAppModal'
 
 export async function generateMetadata({ params }: { params: Promise<{ pais: string }> }) {
   const { pais } = await params
@@ -37,6 +38,11 @@ export default async function TicketsPage({ params }: { params: Promise<{ pais: 
         { name: 'Entradas', url: `${baseUrl}/${countrySlug}/${config.ticketsSlug}` },
       ])} />
       <Navbar />
+      <WhatsAppModal
+        countrySlug={countrySlug}
+        countryName={config.name}
+        language={config.language}
+      />
 
       <TicketsPageClient
         countrySlug={countrySlug}
