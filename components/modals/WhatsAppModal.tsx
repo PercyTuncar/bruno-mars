@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { X, MessageCircle, Users, Bell, Zap } from 'lucide-react'
+import { X } from 'lucide-react'
 import type { CountrySlug } from '@/data/countries.config'
 import { getWhatsAppGroupUrl } from '@/data/whatsapp.config'
 
@@ -19,35 +19,25 @@ export function WhatsAppModal({ countrySlug, countryName, language }: WhatsAppMo
 
   // Textos por idioma
   const content = language === 'pt' ? {
-    title: 'Junte-se ao Grupo VIP',
-    subtitle: `Comunidade oficial de fãs do Bruno Mars no ${countryName}`,
-    benefits: [
-      { icon: Bell, text: 'Atualizações em primeira mão' },
-      { icon: Zap, text: 'Promoções exclusivas' },
-      { icon: Users, text: 'Conecte-se com outros fãs' },
-    ],
+    title: 'Junte-se ao nosso grupo do WhatsApp',
+    subtitle: `Receba atualizações exclusivas sobre o show do Bruno Mars no ${countryName}`,
     button: 'Entrar no Grupo',
-    later: 'Talvez depois',
+    later: 'Agora não',
   } : {
-    title: 'Únete al Grupo VIP',
-    subtitle: `Comunidad oficial de fans de Bruno Mars en ${countryName}`,
-    benefits: [
-      { icon: Bell, text: 'Actualizaciones de primera mano' },
-      { icon: Zap, text: 'Promociones exclusivas' },
-      { icon: Users, text: 'Conecta con otros fans' },
-    ],
+    title: 'Únete a nuestro grupo de WhatsApp',
+    subtitle: `Recibe actualizaciones exclusivas sobre el show de Bruno Mars en ${countryName}`,
     button: 'Unirme al Grupo',
-    later: 'Tal vez después',
+    later: 'Ahora no',
   }
 
   useEffect(() => {
-    // Mostrar el modal después de 5 segundos si no se ha cerrado antes
+    // Mostrar el modal después de 3 segundos si no se ha cerrado antes
     const hasSeenModal = localStorage.getItem(`whatsapp-modal-${countrySlug}`)
 
     if (!hasSeenModal) {
       const timer = setTimeout(() => {
         setIsOpen(true)
-      }, 5000)
+      }, 3000)
 
       return () => clearTimeout(timer)
     }
@@ -86,7 +76,7 @@ export function WhatsAppModal({ countrySlug, countryName, language }: WhatsAppMo
         {/* Close button */}
         <button
           onClick={handleClose}
-          className="absolute top-4 right-4 p-2 hover:bg-white/10 rounded-full transition-colors"
+          className="absolute top-4 right-4 p-2 hover:bg-white/10 rounded-full transition-colors z-10"
           aria-label="Cerrar"
         >
           <X className="h-5 w-5 text-white/70" />
@@ -94,17 +84,19 @@ export function WhatsAppModal({ countrySlug, countryName, language }: WhatsAppMo
 
         {/* Header con gradiente */}
         <div className="relative overflow-hidden rounded-t-2xl">
-          <div className="absolute inset-0 bg-gradient-to-br from-green-500/20 via-primary/20 to-green-600/20" />
+          <div className="absolute inset-0 bg-gradient-to-br from-green-500/20 via-green-400/20 to-green-600/20" />
           <div className="relative px-6 pt-8 pb-6 text-center">
-            {/* WhatsApp icon con efecto glow */}
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-500 shadow-lg shadow-green-500/50 mb-4">
-              <MessageCircle className="h-8 w-8 text-white fill-white" />
+            {/* WhatsApp icon real con SVG */}
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-[#25D366] shadow-lg shadow-green-500/50 mb-4">
+              <svg viewBox="0 0 32 32" className="h-12 w-12 fill-white">
+                <path d="M27.281 4.65C24.351 1.656 20.381 0 16.105 0h-.028C7.321 0 .203 7.118.203 15.902c0 2.801.733 5.535 2.127 7.948L.117 32l8.355-2.193c2.315 1.263 4.92 1.93 7.573 1.93h.007c8.777 0 15.902-7.118 15.902-15.902 0-4.248-1.652-8.239-4.673-11.235zm-11.176 24.42c-2.368 0-4.689-.637-6.71-1.837l-.482-.286-4.998 1.31 1.333-4.872-.314-.499c-1.319-2.095-2.014-4.515-2.014-7.018 0-7.258 5.905-13.164 13.164-13.164 3.516 0 6.817 1.37 9.295 3.86 2.478 2.489 3.841 5.797 3.841 9.313-.001 7.258-5.905 13.163-13.115 13.163zm7.214-9.848c-.395-.197-2.343-1.156-2.707-1.288-.364-.132-.628-.197-.892.197-.264.395-1.024 1.288-1.256 1.553-.232.264-.463.297-.858.099-.395-.197-1.669-.615-3.178-1.96-1.175-1.047-1.968-2.34-2.199-2.735-.232-.395-.025-.608.173-.805.177-.177.395-.463.593-.694.197-.232.264-.395.395-.66.132-.264.066-.495-.033-.693-.099-.198-.892-2.152-1.223-2.947-.321-.777-.647-.671-.892-.684-.232-.013-.495-.013-.759-.013s-.694.099-1.057.495c-.364.395-1.387 1.355-1.387 3.309s1.42 3.838 1.617 4.103c.197.264 2.786 4.256 6.751 5.968.943.407 1.679.65 2.252.832.946.3 1.805.257 2.486.156.758-.113 2.343-.958 2.673-1.882.33-.924.33-1.717.232-1.882-.099-.165-.363-.264-.759-.462z"/>
+              </svg>
             </div>
 
             <h2 className="text-2xl font-black text-white mb-2">
               {content.title}
             </h2>
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white/80 leading-relaxed">
               {content.subtitle}
             </p>
           </div>
@@ -112,33 +104,15 @@ export function WhatsAppModal({ countrySlug, countryName, language }: WhatsAppMo
 
         {/* Body */}
         <div className="px-6 py-6">
-          {/* Beneficios */}
-          <div className="space-y-3 mb-6">
-            {content.benefits.map((benefit, index) => {
-              const Icon = benefit.icon
-              return (
-                <div
-                  key={index}
-                  className="flex items-center gap-3 p-3 bg-muted/30 rounded-xl border border-border/50"
-                >
-                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <Icon className="h-5 w-5 text-primary" />
-                  </div>
-                  <span className="text-sm font-semibold text-white/90">
-                    {benefit.text}
-                  </span>
-                </div>
-              )
-            })}
-          </div>
-
           {/* Buttons */}
           <div className="space-y-3">
             <button
               onClick={handleJoinClick}
-              className="w-full flex items-center justify-center gap-2 h-12 px-6 bg-green-500 hover:bg-green-600 text-white rounded-xl font-bold text-base shadow-lg shadow-green-500/30 hover:shadow-green-500/50 transition-all hover:scale-105"
+              className="w-full flex items-center justify-center gap-2 h-12 px-6 bg-[#25D366] hover:bg-[#20BA5A] text-white rounded-xl font-bold text-base shadow-lg shadow-green-500/30 hover:shadow-green-500/50 transition-all hover:scale-105"
             >
-              <MessageCircle className="h-5 w-5" />
+              <svg viewBox="0 0 32 32" className="h-5 w-5 fill-white">
+                <path d="M27.281 4.65C24.351 1.656 20.381 0 16.105 0h-.028C7.321 0 .203 7.118.203 15.902c0 2.801.733 5.535 2.127 7.948L.117 32l8.355-2.193c2.315 1.263 4.92 1.93 7.573 1.93h.007c8.777 0 15.902-7.118 15.902-15.902 0-4.248-1.652-8.239-4.673-11.235zm-11.176 24.42c-2.368 0-4.689-.637-6.71-1.837l-.482-.286-4.998 1.31 1.333-4.872-.314-.499c-1.319-2.095-2.014-4.515-2.014-7.018 0-7.258 5.905-13.164 13.164-13.164 3.516 0 6.817 1.37 9.295 3.86 2.478 2.489 3.841 5.797 3.841 9.313-.001 7.258-5.905 13.163-13.115 13.163zm7.214-9.848c-.395-.197-2.343-1.156-2.707-1.288-.364-.132-.628-.197-.892.197-.264.395-1.024 1.288-1.256 1.553-.232.264-.463.297-.858.099-.395-.197-1.669-.615-3.178-1.96-1.175-1.047-1.968-2.34-2.199-2.735-.232-.395-.025-.608.173-.805.177-.177.395-.463.593-.694.197-.232.264-.395.395-.66.132-.264.066-.495-.033-.693-.099-.198-.892-2.152-1.223-2.947-.321-.777-.647-.671-.892-.684-.232-.013-.495-.013-.759-.013s-.694.099-1.057.495c-.364.395-1.387 1.355-1.387 3.309s1.42 3.838 1.617 4.103c.197.264 2.786 4.256 6.751 5.968.943.407 1.679.65 2.252.832.946.3 1.805.257 2.486.156.758-.113 2.343-.958 2.673-1.882.33-.924.33-1.717.232-1.882-.099-.165-.363-.264-.759-.462z"/>
+              </svg>
               {content.button}
             </button>
 
@@ -148,14 +122,6 @@ export function WhatsAppModal({ countrySlug, countryName, language }: WhatsAppMo
             >
               {content.later}
             </button>
-          </div>
-        </div>
-
-        {/* Footer trust badge */}
-        <div className="px-6 pb-6">
-          <div className="flex items-center justify-center gap-2 text-xs text-white/40">
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-            <span>+1,000 fans activos</span>
           </div>
         </div>
       </div>
