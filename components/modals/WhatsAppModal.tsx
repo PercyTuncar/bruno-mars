@@ -77,10 +77,10 @@ export function WhatsAppModal({ countrySlug, countryName, language }: WhatsAppMo
         {/* Close button */}
         <button
           onClick={handleClose}
-          className="absolute top-4 right-4 p-2 hover:bg-white/10 rounded-full transition-colors z-10"
+          className="absolute top-4 right-4 p-2 hover:bg-muted rounded-full transition-colors z-10"
           aria-label="Cerrar"
         >
-          <X className="h-5 w-5 text-white/70" />
+          <X className="h-5 w-5 text-muted-foreground" />
         </button>
 
         {/* Header con gradiente */}
@@ -94,10 +94,10 @@ export function WhatsAppModal({ countrySlug, countryName, language }: WhatsAppMo
               </svg>
             </div>
 
-            <h2 className="text-2xl font-black text-white mb-2">
+            <h2 className="text-2xl font-black text-foreground mb-2">
               {content.title}
             </h2>
-            <p className="text-sm text-white/80 leading-relaxed">
+            <p className="text-sm text-foreground/80 leading-relaxed">
               {content.subtitle}
             </p>
           </div>
@@ -119,7 +119,7 @@ export function WhatsAppModal({ countrySlug, countryName, language }: WhatsAppMo
 
             <button
               onClick={handleClose}
-              className="w-full h-10 px-6 text-white/50 hover:text-white/70 text-sm font-medium transition-colors"
+              className="w-full h-10 px-6 text-muted-foreground hover:text-foreground text-sm font-medium transition-colors"
             >
               {content.later}
             </button>
