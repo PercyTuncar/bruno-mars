@@ -310,7 +310,7 @@ Se usará un **route group con slug de acción configurable por país**: la carp
 
 ### 7.2 Página de país — ejemplo Perú (`/peru`)
 - `<title>`: `Bruno Mars en Perú` *(tal como lo pide el cliente, exacto)*.
-- `<meta name="description">`: Ejemplo: `Bruno Mars llega a Perú con The Romantic Tour. Conciertos confirmados el 3 y 4 de setiembre de 2027 en el Estadio Nacional, Lima. Consulta fechas, zonas y compra tus entradas oficiales.`
+- `<meta name="description">`: Ejemplo: `Bruno Mars en Perú llega con The Romantic Tour. Consulta fechas, zonas y compra tus entradas oficiales para el concierto.`
 - Canonical: `https://brunomars.lat/peru`
 - Hreflang (declarado en `<head>` vía `alternates.languages`, recíproco en las 5 páginas de país):
   ```html
