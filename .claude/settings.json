@@ -19,7 +19,13 @@
       "Bash(curl -s http://localhost:3000/peru)",
       "Bash(curl -s http://localhost:3000/brasil)",
       "Bash(git init *)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git commit -m 'Initial commit: Bruno Mars LATAM - The Romantic Tour 2027 *)",
+      "Bash(git branch *)",
+      "Bash(git remote *)",
+      "Bash(git push *)",
+      "Bash(git commit *)",
+      "Bash(git commit -m 'Fix: Configure for Cloudflare Pages static export *)"
     ],
     "additionalDirectories": [
       "c:\\Users\\tunca\\.claude\\projects\\c--Users-tunca-OneDrive-Desktop-Github-bruno-mars\\memory",

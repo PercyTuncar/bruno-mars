@@ -14,7 +14,7 @@
 
 ### 2. Configuración del Build
 
-**Framework preset:** Next.js
+**Framework preset:** Next.js (Static HTML Export)
 
 **Build command:**
 ```bash
@@ -23,7 +23,7 @@ npm run build
 
 **Build output directory:**
 ```
-.next
+out
 ```
 
 **Root directory:**
