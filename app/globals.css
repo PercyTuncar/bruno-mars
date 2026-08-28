@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Modo Light */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 4%;
+    --primary: 0 75% 45%; /* Rojo mate hermoso #C0392B */
+    --primary-foreground: 0 0% 100%;
+    --accent: 0 85% 35%; /* Rojo sangre vivo #8B1F1F */
+    --accent-foreground: 0 0% 100%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 4%;
+    --border: 0 0% 92%;
+    --ring: 0 75% 45%;
+  }
+
+  .dark {
+    /* Modo Dark - Rojo mate + sangre */
+    --background: 0 0% 4%; /* #0A0A0A negro profundo */
+    --foreground: 0 0% 100%;
+    --primary: 0 75% 50%; /* Rojo mate #DC3545 */
+    --primary-foreground: 0 0% 100%;
+    --accent: 0 85% 40%; /* Rojo sangre vivo #A71D2A */
+    --accent-foreground: 0 0% 100%;
+    --muted: 0 0% 10%; /* #1A1A1A */
+    --muted-foreground: 0 0% 65%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 100%;
+    --border: 0 0% 15%;
+    --ring: 0 75% 50%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 500;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 900; /* EXTRA BOLD en todos los títulos */
+    letter-spacing: -0.03em;
+  }
+
+  strong, b {
+    font-weight: 800;
+  }
+
+  /* Botones y elementos destacados */
+  button, .btn {
+    font-weight: 700;
+  }
+
+  /* Scrollbar personalizado */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+    border-radius: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary) / 0.5);
+    border-radius: 4px;
+    transition: background 0.2s;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary));
+  }
+
+  /* Glow effect para primary */
+  .glow-primary {
+    box-shadow: 0 0 20px rgba(220, 53, 69, 0.3);
+  }
+
+  .glow-primary:hover {
+    box-shadow: 0 0 30px rgba(220, 53, 69, 0.5);
+  }
+
+  /* Gradient rojo mate a sangre */
+  .gradient-red {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(npx create-next-app@latest . --typescript --tailwind --app --no-src-dir --import-alias \"@/*\" --turbopack --use-npm)",
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "Bash(taskkill /F /FI \"WINDOWTITLE eq npm*\")",
+      "Bash(npm list *)",
+      "Bash(npm uninstall *)",
+      "Bash(taskkill //F //IM node.exe)",
+      "Bash(curl -s http://localhost:3000)",
+      "Bash(sed -i 's/{ label:/{ name:/g; s/, href:/, url:/g' app/\\\\[pais\\\\]/entradas/page.tsx && echo \"Fixed breadcrumbs\")",
+      "Bash(sed -i 's/data\\\\.capacity/data.venue.capacity/g' app/\\\\[pais\\\\]/page.tsx && echo \"Fixed all capacity references\")",
+      "Bash(sed -i 's/{data\\\\.venue}/{data.venue.name}/g' app/\\\\[pais\\\\]/page.tsx && echo \"Fixed venue rendering\")",
+      "Bash(sed -i 's/{data\\\\.city}/{data.venue.address.city}/g' app/\\\\[pais\\\\]/page.tsx && echo \"Fixed city rendering\")",
+      "Bash(sed -i 's/data\\\\.capacity/data.venue.capacity/g' app/\\\\[pais\\\\]/entradas/page.tsx && echo \"Fixed capacity in tickets page\")",
+      "WebFetch(domain:dice.fm)",
+      "Bash(curl -s http://localhost:3000/peru)",
+      "Bash(curl -s http://localhost:3000/brasil)",
+      "Bash(git init *)",
+      "Bash(git add *)"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\tunca\\.claude\\projects\\c--Users-tunca-OneDrive-Desktop-Github-bruno-mars\\memory",
+      "C:\\Users\\tunca\\OneDrive\\Desktop\\Github\\bruno-mars\\app\\[pais]\\entradas",
+      "C:\\Users\\tunca\\OneDrive\\Desktop\\Github\\bruno-mars\\app\\[pais]",
+      "c:\\Users\\tunca\\OneDrive\\Desktop\\Github\\bruno-mars\\app\\[pais]\\entradas"
+    ]
+  }
+}
