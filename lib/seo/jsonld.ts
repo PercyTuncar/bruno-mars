@@ -29,6 +29,7 @@ export function buildOrganizationSchema() {
 /**
  * JSON-LD de MusicEvent para la página de país (informativa)
  * Usa AggregateOffer con rango de precios
+ * Cumple con todas las propiedades requeridas y recomendadas de Google (2026)
  */
 export function buildCountryEventSchema(countrySlug: CountrySlug) {
   const data = getCountryData(countrySlug)
@@ -43,11 +44,17 @@ export function buildCountryEventSchema(countrySlug: CountrySlug) {
   const events = data.dates.map((dateInfo, index) => ({
     '@type': 'MusicEvent',
     '@id': `${BASE_URL}/${countrySlug}#evento-${index + 1}`,
-    name: `Bruno Mars - The Romantic Tour (${data.name}, ${dateInfo.dateDisplay})`,
+    name: `Bruno Mars - The Romantic Tour ${data.name}`,
+    description: data.content.hero.description,
     startDate: `${dateInfo.date}T${dateInfo.time}:00${getTimezoneOffset(dateInfo.timezone)}`,
-    endDate: `${dateInfo.date}T23:59:00${getTimezoneOffset(dateInfo.timezone)}`,
+    endDate: `${dateInfo.date}T22:30:00${getTimezoneOffset(dateInfo.timezone)}`,
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     eventStatus: 'https://schema.org/EventScheduled',
+    image: [
+      `${BASE_URL}${data.images.hero}`,
+      `${BASE_URL}${data.images.og}`,
+      `${BASE_URL}${data.images.venue}`,
+    ],
     location: {
       '@type': 'Place',
       name: data.venue.name,
@@ -59,16 +66,17 @@ export function buildCountryEventSchema(countrySlug: CountrySlug) {
         postalCode: data.venue.address.postalCode,
         addressCountry: data.venue.address.country,
       },
+      maximumAttendeeCapacity: data.venue.capacity,
     },
-    image: [
-      `${BASE_URL}${data.images.hero}`,
-      `${BASE_URL}${data.images.og}`,
-      `${BASE_URL}${data.images.venue}`,
-    ],
-    description: data.content.hero.description,
     performer: {
-      '@type': 'Person',
+      '@type': 'MusicGroup',
       name: 'Bruno Mars',
+      sameAs: [
+        'https://www.wikidata.org/wiki/Q1450',
+        'https://en.wikipedia.org/wiki/Bruno_Mars',
+        'https://www.instagram.com/brunomars/',
+        'https://www.facebook.com/brunomars',
+      ],
     },
     organizer: {
       '@type': 'Organization',
@@ -81,10 +89,12 @@ export function buildCountryEventSchema(countrySlug: CountrySlug) {
       priceCurrency: zones.currency,
       lowPrice: minPrice.toFixed(2),
       highPrice: maxPrice.toFixed(2),
-      offerCount: zones.zones.length.toString(),
+      offerCount: zones.zones.length,
       availability: 'https://schema.org/InStock',
       validFrom: data.offersValidFrom,
     },
+    typicalAgeRange: '13+',
+    inLanguage: config.language === 'pt' ? 'pt-BR' : 'es',
   }))
 
   return {
@@ -96,6 +106,7 @@ export function buildCountryEventSchema(countrySlug: CountrySlug) {
 /**
  * JSON-LD de MusicEvent + Offer[] para la página de entradas (venta)
  * Un Offer por cada zona, con precio específico
+ * Cumple con todas las propiedades requeridas y recomendadas de Google (2026)
  */
 export function buildTicketsEventSchema(countrySlug: CountrySlug) {
   const data = getCountryData(countrySlug)
@@ -116,22 +127,48 @@ export function buildTicketsEventSchema(countrySlug: CountrySlug) {
   const event = {
     '@type': 'MusicEvent',
     '@id': `${BASE_URL}/${countrySlug}/${config.ticketsSlug}#evento`,
-    name: `Bruno Mars - The Romantic Tour (${data.name})`,
+    name: `Bruno Mars - The Romantic Tour ${data.name}`,
+    description: data.content.hero.description,
     startDate: `${data.dates[0].date}T${data.dates[0].time}:00${getTimezoneOffset(data.dates[0].timezone)}`,
+    endDate: `${data.dates[0].date}T22:30:00${getTimezoneOffset(data.dates[0].timezone)}`,
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    eventStatus: 'https://schema.org/EventScheduled',
+    image: [
+      `${BASE_URL}${data.images.hero}`,
+      `${BASE_URL}${data.images.og}`,
+      `${BASE_URL}${data.images.venue}`,
+    ],
     location: {
       '@type': 'Place',
       name: data.venue.name,
       address: {
         '@type': 'PostalAddress',
+        streetAddress: data.venue.address.streetAddress,
         addressLocality: data.venue.address.city,
+        addressRegion: data.venue.address.region,
+        postalCode: data.venue.address.postalCode,
         addressCountry: data.venue.address.country,
       },
+      maximumAttendeeCapacity: data.venue.capacity,
     },
     performer: {
-      '@type': 'Person',
+      '@type': 'MusicGroup',
       name: 'Bruno Mars',
+      sameAs: [
+        'https://www.wikidata.org/wiki/Q1450',
+        'https://en.wikipedia.org/wiki/Bruno_Mars',
+        'https://www.instagram.com/brunomars/',
+        'https://www.facebook.com/brunomars',
+      ],
+    },
+    organizer: {
+      '@type': 'Organization',
+      name: 'brunomars.lat',
+      url: BASE_URL,
     },
     offers,
+    typicalAgeRange: '13+',
+    inLanguage: config.language === 'pt' ? 'pt-BR' : 'es',
   }
 
   return {

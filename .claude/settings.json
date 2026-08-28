@@ -30,7 +30,8 @@
       "WebFetch(domain:developers.cloudflare.com)",
       "Bash(git commit -m 'Fix: Remove .nopennext and update deploy guide with correct solution *)",
       "Bash(cp \"favicon_io bruno\"/*.png public/ && cp \"favicon_io bruno\"/favicon.ico public/)",
-      "Bash(git commit -m 'Add proper favicon implementation from favicon_io bruno *)"
+      "Bash(git commit -m 'Add proper favicon implementation from favicon_io bruno *)",
+      "WebFetch(domain:developers.google.com)"
     ],
     "additionalDirectories": [
       "c:\\Users\\tunca\\.claude\\projects\\c--Users-tunca-OneDrive-Desktop-Github-bruno-mars\\memory",

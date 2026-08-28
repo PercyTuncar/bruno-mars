@@ -13,16 +13,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: [
           '/*/entradas/checkout',
           '/*/ingressos/checkout',
-          '/api/',
-          '/_next/',
-        ],
-      },
-      {
-        userAgent: 'Googlebot',
-        allow: '/',
-        disallow: [
-          '/*/entradas/checkout',
-          '/*/ingressos/checkout',
         ],
       },
     ],
