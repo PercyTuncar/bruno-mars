@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import { isValidCountry, type CountrySlug, getCountryConfig } from '@/data/countries.config'
 import { getCountryData } from '@/data/countries'
 import { getCountryZones } from '@/data/zones'
-import { getCountryLandingMetadata } from '@/lib/seo/metadata'
+import { getCountryTicketsMetadata } from '@/lib/seo/metadata'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { buildCountryEventSchema, buildBreadcrumbSchema } from '@/lib/seo/jsonld'
 import { Navbar } from '@/components/layout/Navbar'
@@ -12,7 +12,7 @@ import { WhatsAppModal } from '@/components/modals/WhatsAppModal'
 export async function generateMetadata({ params }: { params: Promise<{ pais: string }> }) {
   const { pais } = await params
   if (!isValidCountry(pais)) return {}
-  return getCountryLandingMetadata(pais as CountrySlug)
+  return getCountryTicketsMetadata(pais as CountrySlug)
 }
 
 export const revalidate = 300
