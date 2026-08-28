@@ -1,2 +1,0 @@
-# This file tells Cloudflare Pages to NOT use @opennextjs/cloudflare
-# We are using Next.js static export (output: 'export')

@@ -26,7 +26,9 @@
       "Bash(git push *)",
       "Bash(git commit *)",
       "Bash(git commit -m 'Fix: Configure for Cloudflare Pages static export *)",
-      "Bash(git commit -m 'Add .nopennext to disable OpenNext auto-detection *)"
+      "Bash(git commit -m 'Add .nopennext to disable OpenNext auto-detection *)",
+      "WebFetch(domain:developers.cloudflare.com)",
+      "Bash(git commit -m 'Fix: Remove .nopennext and update deploy guide with correct solution *)"
     ],
     "additionalDirectories": [
       "c:\\Users\\tunca\\.claude\\projects\\c--Users-tunca-OneDrive-Desktop-Github-bruno-mars\\memory",

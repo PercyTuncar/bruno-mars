@@ -1,62 +1,57 @@
-# Deploy en Cloudflare Pages
+# Deploy en Cloudflare Pages - Next.js Static Export
 
-## 🔴 IMPORTANTE: Configuración para Static Export
+## 🔴 PROBLEMA IDENTIFICADO
 
-Este proyecto usa **Next.js Static Export** (`output: 'export'`), NO OpenNext/Workers.
+Cloudflare detecta automáticamente Next.js y trata de usar **@opennextjs/cloudflare** (Workers).
 
-El archivo `.nopennext` le indica a Cloudflare que **NO use @opennextjs/cloudflare**.
+Para un sitio 100% estático con `output: 'export'`, esto causa errores.
 
-## 📋 Pasos para Deploy
+## ✅ SOLUCIÓN CORRECTA
 
-### 1. Conectar con GitHub
+### Opción 1: Usar Framework Preset "None" (RECOMENDADO)
 
 1. Ve a [Cloudflare Dashboard](https://dash.cloudflare.com/)
-2. Selecciona tu cuenta
-3. Ve a **Workers & Pages**
-4. Click en **Create Application**
-5. Selecciona **Pages** > **Connect to Git**
-6. Autoriza Cloudflare a acceder a tu GitHub
-7. Selecciona el repositorio: `PercyTuncar/bruno-mars`
+2. **Workers & Pages** > Tu proyecto > **Settings** > **Builds & deployments**
+3. Click en **Edit configurations**
+4. Configura:
+   ```
+   Framework preset: None
+   Build command: npm run build
+   Build output directory: out
+   Root directory: (leave empty)
+   ```
+5. **Save**
+6. Ve a **Deployments** y click en **Retry deployment**
 
-### 2. Configuración del Build
+### Opción 2: Variables de Entorno (Alternativa)
 
-**Framework preset:** Next.js (Static HTML Export)
+Si la Opción 1 no funciona, agrega esta variable en **Settings > Environment variables**:
 
-**Build command:**
-```bash
-npm run build
+```
+DISABLE_OPENNEXT=1
 ```
 
-**Build output directory:**
+O usa el build command completo:
+
 ```
-out
+npm run build && echo "Static export - no OpenNext"
 ```
 
-**Root directory:**
-```
-/
-```
-
-### 3. Variables de Entorno
-
-Agrega estas variables en **Settings > Environment Variables**:
+### Variables de Entorno Requeridas
 
 ```env
 NEXT_PUBLIC_BASE_URL=https://brunomars.lat
 NODE_VERSION=20
 ```
 
-### 4. ⚠️ Si sigue usando OpenNext
+## 📚 Referencias
 
-Si Cloudflare ignora el archivo `.nopennext` y sigue intentando usar OpenNext:
+- [Cloudflare Pages - Static Next.js](https://developers.cloudflare.com/pages/framework-guides/nextjs/deploy-a-static-nextjs-site/)
+- [Build Configuration](https://developers.cloudflare.com/pages/configuration/build-configuration/)
 
-1. Ve a **Settings > Build & deployments**
-2. En **Build configuration**, cambia:
-   - Framework preset: **None** (en lugar de Next.js)
-   - Build command: `npm run build`
-   - Build output: `out`
+---
 
-Esto forzará a Cloudflare a usar el build estático sin detección automática.
+**Última actualización:** La clave es usar Framework preset "None" para evitar la detección automática de OpenNext.
 
 ### 4. Build Settings
 
