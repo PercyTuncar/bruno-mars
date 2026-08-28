@@ -25,7 +25,8 @@
       "Bash(git remote *)",
       "Bash(git push *)",
       "Bash(git commit *)",
-      "Bash(git commit -m 'Fix: Configure for Cloudflare Pages static export *)"
+      "Bash(git commit -m 'Fix: Configure for Cloudflare Pages static export *)",
+      "Bash(git commit -m 'Add .nopennext to disable OpenNext auto-detection *)"
     ],
     "additionalDirectories": [
       "c:\\Users\\tunca\\.claude\\projects\\c--Users-tunca-OneDrive-Desktop-Github-bruno-mars\\memory",

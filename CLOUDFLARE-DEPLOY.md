@@ -1,5 +1,11 @@
 # Deploy en Cloudflare Pages
 
+## 🔴 IMPORTANTE: Configuración para Static Export
+
+Este proyecto usa **Next.js Static Export** (`output: 'export'`), NO OpenNext/Workers.
+
+El archivo `.nopennext` le indica a Cloudflare que **NO use @opennextjs/cloudflare**.
+
 ## 📋 Pasos para Deploy
 
 ### 1. Conectar con GitHub
@@ -39,6 +45,18 @@ Agrega estas variables en **Settings > Environment Variables**:
 NEXT_PUBLIC_BASE_URL=https://brunomars.lat
 NODE_VERSION=20
 ```
+
+### 4. ⚠️ Si sigue usando OpenNext
+
+Si Cloudflare ignora el archivo `.nopennext` y sigue intentando usar OpenNext:
+
+1. Ve a **Settings > Build & deployments**
+2. En **Build configuration**, cambia:
+   - Framework preset: **None** (en lugar de Next.js)
+   - Build command: `npm run build`
+   - Build output: `out`
+
+Esto forzará a Cloudflare a usar el build estático sin detección automática.
 
 ### 4. Build Settings
 
