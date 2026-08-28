@@ -18,23 +18,29 @@ Configuración centralizada de los enlaces de WhatsApp por país:
 Componente modal con las siguientes características:
 
 #### Diseño
-- ✅ Diseño moderno consistente con el sistema de diseño
+- ✅ **Ícono Real de WhatsApp** (SVG oficial del logo)
+- ✅ **Diseño limpio y directo** - Sin distracciones
+- ✅ **Mensaje claro**: "Únete a nuestro grupo de WhatsApp"
+- ✅ **Color oficial de WhatsApp** (#25D366)
 - ✅ Animaciones suaves (fade in/out, scale)
 - ✅ Backdrop blur para enfocar la atención
-- ✅ Gradientes y efectos glow en el ícono de WhatsApp
 - ✅ Responsive y adaptable a móviles
 
 #### Funcionalidad
-- ✅ **Auto-show**: Aparece automáticamente después de 5 segundos
-- ✅ **localStorage**: Solo se muestra una vez por país (no molesta al usuario)
+- ✅ **Auto-show**: Aparece automáticamente después de 2 segundos
+- ✅ **SIEMPRE se muestra**: NO usa localStorage (aparece en cada visita)
 - ✅ **Bilingüe**: Textos en español y portugués según el país
 - ✅ **Click fuera para cerrar**: UX intuitiva
-- ✅ **Botón "Tal vez después"**: Opción no invasiva
+- ✅ **Botón "Ahora no"**: Opción para cerrar
 
-#### Beneficios Mostrados
-1. 🔔 Actualizaciones de primera mano
-2. ⚡ Promociones exclusivas
-3. 👥 Conecta con otros fans
+#### Mensaje
+**Español:**
+- Título: "Únete a nuestro grupo de WhatsApp"
+- Subtítulo: "Recibe actualizaciones exclusivas sobre el show de Bruno Mars en {País}"
+
+**Portugués (Brasil):**
+- Título: "Junte-se ao nosso grupo do WhatsApp"
+- Subtítulo: "Receba atualizações exclusivas sobre o show do Bruno Mars no Brasil"
 
 ## Archivos Modificados
 
@@ -49,33 +55,18 @@ Componente modal con las siguientes características:
 ## Comportamiento del Modal
 
 ### Cuándo se muestra
-- ✅ Primera visita a `/peru` o `/peru/entradas`
-- ✅ Después de 5 segundos de cargar la página
-- ✅ Solo una vez por país (guarda en localStorage)
-
-### Cuándo NO se muestra
-- ❌ Si el usuario ya lo vio anteriormente (localStorage)
-- ❌ Si el usuario lo cerró (guarda preferencia)
+- ✅ **SIEMPRE** en cada visita a `/peru` o `/peru/entradas`
+- ✅ Después de **2 segundos** de cargar la página
+- ✅ **NO usa localStorage** - se muestra cada vez
 
 ### Cómo se cierra
 1. Click en el botón "×" (esquina superior derecha)
 2. Click fuera del modal (en el backdrop)
-3. Click en "Tal vez después"
+3. Click en "Ahora no"
 4. Click en "Unirme al Grupo" (abre WhatsApp y cierra)
 
-## localStorage Keys
-
-El modal guarda la preferencia del usuario con esta clave:
-```
-whatsapp-modal-{pais}
-```
-
-Ejemplos:
-- `whatsapp-modal-peru`
-- `whatsapp-modal-chile`
-- `whatsapp-modal-argentina`
-- `whatsapp-modal-colombia`
-- `whatsapp-modal-brasil`
+### ⚠️ Importante
+**El modal NO guarda preferencias**. Se mostrará en cada visita a las páginas de país o entradas, independientemente de si el usuario lo cerró anteriormente o se unió al grupo.
 
 ## Personalización
 
@@ -84,30 +75,23 @@ Edita `components/modals/WhatsAppModal.tsx`:
 ```typescript
 setTimeout(() => {
   setIsOpen(true)
-}, 5000) // Cambiar 5000 (5 segundos) al valor deseado
+}, 2000) // Cambiar 2000 (2 segundos) al valor deseado
 ```
 
 ### Cambiar los textos
 Los textos están en el objeto `content` dentro del componente:
 - `title`: Título del modal
 - `subtitle`: Subtítulo descriptivo
-- `benefits`: Lista de beneficios
 - `button`: Texto del botón principal
 - `later`: Texto del botón secundario
 
-### Forzar que aparezca nuevamente
-Para testing o para que vuelva a aparecer, ejecuta en la consola del navegador:
-```javascript
-localStorage.removeItem('whatsapp-modal-peru')
-```
+### Debugging
+El modal incluye console.logs para debugging:
+- País actual
+- URL del grupo de WhatsApp
+- Estado de apertura del modal
 
-## Análisis y Métricas Recomendadas
-
-Para trackear la efectividad del modal, considera agregar:
-1. **Click en "Unirme al Grupo"** - Tasa de conversión
-2. **Click en "Tal vez después"** - Tasa de rechazo suave
-3. **Click en cerrar (X)** - Tasa de rechazo total
-4. **Tiempo hasta conversión** - ¿Cuándo hacen click?
+Revisa la consola del navegador para ver estos logs.
 
 ## Testing
 
@@ -117,10 +101,8 @@ npm run dev
 ```
 
 Visita:
-- http://localhost:3000/peru
-- http://localhost:3000/chile/entradas
-
-El modal debe aparecer después de 5 segundos.
+- http://localhost:3000/peru (modal aparece a los 2 segundos)
+- http://localhost:3000/chile/entradas (modal aparece a los 2 segundos)
 
 ### Verificar en producción
 ```bash
@@ -128,28 +110,39 @@ npm run build
 npm run start
 ```
 
-### Limpiar localStorage para testing
-```javascript
-// En la consola del navegador
-localStorage.clear()
-```
+El modal debe aparecer **cada vez** que visitas cualquiera de estas páginas:
+- `/peru`, `/chile`, `/argentina`, `/colombia`, `/brasil`
+- `/peru/entradas`, `/chile/entradas`, etc.
 
-## Próximas Mejoras Opcionales
+## Rutas donde aparece el modal
 
-1. **A/B Testing**: Probar diferentes textos y tiempos de aparición
-2. **Analytics**: Integrar con Google Analytics o similar
-3. **Variantes**: Diferentes beneficios según la página (landing vs tickets)
-4. **Exit Intent**: Mostrar al intentar salir de la página
-5. **Scroll Trigger**: Mostrar después de cierto % de scroll
+✅ `/peru` → Modal con grupo de Perú  
+✅ `/peru/entradas` → Modal con grupo de Perú  
+✅ `/chile` → Modal con grupo de Chile  
+✅ `/chile/entradas` → Modal con grupo de Chile  
+✅ `/argentina` → Modal con grupo de Argentina  
+✅ `/argentina/entradas` → Modal con grupo de Argentina  
+✅ `/colombia` → Modal con grupo de Colombia  
+✅ `/colombia/entradas` → Modal con grupo de Colombia  
+✅ `/brasil` → Modal con grupo de Brasil  
+✅ `/brasil/ingressos` → Modal con grupo de Brasil  
+
+❌ NO aparece en:
+- Home (`/`)
+- Blog (`/blog`)
+- Checkout (`/[pais]/entradas/checkout`)
 
 ## Estado del Build
 
 ✅ **Build exitoso** - El proyecto compila sin errores  
 ✅ **TypeScript válido** - Sin errores de tipos  
 ✅ **Responsive** - Funciona en móviles y desktop  
-✅ **Accesibilidad** - Botones con aria-label
+✅ **Accesibilidad** - Botones con aria-label  
+✅ **Ícono oficial de WhatsApp** - SVG del logo real  
+✅ **NO usa localStorage** - Se muestra siempre
 
 ---
 
 **Fecha de implementación:** 2026-08-28  
+**Última actualización:** 2026-08-28  
 **Estado:** Listo para deploy ✅

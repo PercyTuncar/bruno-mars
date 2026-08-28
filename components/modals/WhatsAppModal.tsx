@@ -31,29 +31,30 @@ export function WhatsAppModal({ countrySlug, countryName, language }: WhatsAppMo
   }
 
   useEffect(() => {
-    // Mostrar el modal después de 3 segundos si no se ha cerrado antes
-    const hasSeenModal = localStorage.getItem(`whatsapp-modal-${countrySlug}`)
+    // Mostrar el modal después de 2 segundos SIEMPRE (sin localStorage)
+    console.log('WhatsApp Modal - País:', countrySlug)
+    console.log('WhatsApp Modal - URL:', whatsappUrl)
+    console.log('WhatsApp Modal - Programando apertura en 2 segundos...')
 
-    if (!hasSeenModal) {
-      const timer = setTimeout(() => {
-        setIsOpen(true)
-      }, 3000)
+    const timer = setTimeout(() => {
+      console.log('WhatsApp Modal - Abriendo modal!')
+      setIsOpen(true)
+    }, 2000)
 
-      return () => clearTimeout(timer)
-    }
-  }, [countrySlug])
+    return () => clearTimeout(timer)
+  }, [countrySlug, whatsappUrl])
 
   const handleClose = () => {
     setIsClosing(true)
     setTimeout(() => {
       setIsOpen(false)
       setIsClosing(false)
-      localStorage.setItem(`whatsapp-modal-${countrySlug}`, 'true')
+      // NO guardar en localStorage - el modal siempre se mostrará
     }, 200)
   }
 
   const handleJoinClick = () => {
-    localStorage.setItem(`whatsapp-modal-${countrySlug}`, 'true')
+    // NO guardar en localStorage - el modal siempre se mostrará
     window.open(whatsappUrl, '_blank')
     handleClose()
   }
