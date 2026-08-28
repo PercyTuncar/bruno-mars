@@ -297,52 +297,52 @@ function CheckoutContent() {
                   </div>
 
                   <div>
-                    <h2 className="text-3xl font-serif font-bold mb-2">¡Compra Exitosa!</h2>
+                    <h2 className="text-3xl font-serif font-bold mb-2">¡Únete a la Lista de Espera!</h2>
                     <p className="text-muted-foreground text-lg">
-                      Tus entradas han sido enviadas a tu email
+                      Confirma tu interés uniéndote a nuestro grupo de WhatsApp
                     </p>
-                  </div>
-
-                  <div className="bg-muted/50 p-6 rounded-xl max-w-md mx-auto">
-                    <div className="text-sm text-muted-foreground mb-2">Código de confirmación</div>
-                    <div className="text-2xl font-mono font-bold">BM-2027-{Math.random().toString(36).substr(2, 6).toUpperCase()}</div>
                   </div>
 
                   {/* WhatsApp Group Button */}
                   {whatsappUrl && (
                     <div className="max-w-md mx-auto">
-                      <div className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-950/30 dark:to-green-900/20 border-2 border-green-200 dark:border-green-800 rounded-2xl p-6">
-                        <div className="flex items-center justify-center w-16 h-16 bg-[#25D366] rounded-full mx-auto mb-4 shadow-lg shadow-green-500/30">
-                          <svg viewBox="0 0 32 32" className="h-9 w-9 fill-white">
+                      <div className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-950/30 dark:to-green-900/20 border-2 border-green-200 dark:border-green-800 rounded-2xl p-8">
+                        <div className="flex items-center justify-center w-20 h-20 bg-[#25D366] rounded-full mx-auto mb-6 shadow-lg shadow-green-500/30">
+                          <svg viewBox="0 0 32 32" className="h-12 w-12 fill-white">
                             <path d="M27.281 4.65C24.351 1.656 20.381 0 16.105 0h-.028C7.321 0 .203 7.118.203 15.902c0 2.801.733 5.535 2.127 7.948L.117 32l8.355-2.193c2.315 1.263 4.92 1.93 7.573 1.93h.007c8.777 0 15.902-7.118 15.902-15.902 0-4.248-1.652-8.239-4.673-11.235zm-11.176 24.42c-2.368 0-4.689-.637-6.71-1.837l-.482-.286-4.998 1.31 1.333-4.872-.314-.499c-1.319-2.095-2.014-4.515-2.014-7.018 0-7.258 5.905-13.164 13.164-13.164 3.516 0 6.817 1.37 9.295 3.86 2.478 2.489 3.841 5.797 3.841 9.313-.001 7.258-5.905 13.163-13.115 13.163zm7.214-9.848c-.395-.197-2.343-1.156-2.707-1.288-.364-.132-.628-.197-.892.197-.264.395-1.024 1.288-1.256 1.553-.232.264-.463.297-.858.099-.395-.197-1.669-.615-3.178-1.96-1.175-1.047-1.968-2.34-2.199-2.735-.232-.395-.025-.608.173-.805.177-.177.395-.463.593-.694.197-.232.264-.395.395-.66.132-.264.066-.495-.033-.693-.099-.198-.892-2.152-1.223-2.947-.321-.777-.647-.671-.892-.684-.232-.013-.495-.013-.759-.013s-.694.099-1.057.495c-.364.395-1.387 1.355-1.387 3.309s1.42 3.838 1.617 4.103c.197.264 2.786 4.256 6.751 5.968.943.407 1.679.65 2.252.832.946.3 1.805.257 2.486.156.758-.113 2.343-.958 2.673-1.882.33-.924.33-1.717.232-1.882-.099-.165-.363-.264-.759-.462z"/>
                           </svg>
                         </div>
 
-                        <h3 className="text-lg font-black text-foreground mb-2">
-                          ¡Únete a nuestro grupo de WhatsApp!
+                        <h3 className="text-xl font-black text-foreground mb-3">
+                          Confirma tu lugar en la lista
                         </h3>
-                        <p className="text-sm text-foreground/70 mb-4">
-                          Recibe actualizaciones exclusivas, ofertas especiales y conecta con otros fans
+                        <p className="text-sm text-foreground/80 mb-6 leading-relaxed">
+                          Únete al grupo oficial de WhatsApp para recibir actualizaciones sobre la venta de entradas,
+                          preventa exclusiva y ser el primero en enterarte cuando estén disponibles
                         </p>
 
                         <a
                           href={whatsappUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center gap-2 w-full h-12 px-6 bg-[#25D366] hover:bg-[#20BA5A] text-white rounded-xl font-bold shadow-lg shadow-green-500/30 hover:shadow-green-500/50 transition-all hover:scale-105"
+                          className="inline-flex items-center justify-center gap-2 w-full h-14 px-6 bg-[#25D366] hover:bg-[#20BA5A] text-white rounded-xl font-bold text-lg shadow-lg shadow-green-500/30 hover:shadow-green-500/50 transition-all hover:scale-105"
                         >
-                          <svg viewBox="0 0 32 32" className="h-5 w-5 fill-white">
+                          <svg viewBox="0 0 32 32" className="h-6 w-6 fill-white">
                             <path d="M27.281 4.65C24.351 1.656 20.381 0 16.105 0h-.028C7.321 0 .203 7.118.203 15.902c0 2.801.733 5.535 2.127 7.948L.117 32l8.355-2.193c2.315 1.263 4.92 1.93 7.573 1.93h.007c8.777 0 15.902-7.118 15.902-15.902 0-4.248-1.652-8.239-4.673-11.235zm-11.176 24.42c-2.368 0-4.689-.637-6.71-1.837l-.482-.286-4.998 1.31 1.333-4.872-.314-.499c-1.319-2.095-2.014-4.515-2.014-7.018 0-7.258 5.905-13.164 13.164-13.164 3.516 0 6.817 1.37 9.295 3.86 2.478 2.489 3.841 5.797 3.841 9.313-.001 7.258-5.905 13.163-13.115 13.163zm7.214-9.848c-.395-.197-2.343-1.156-2.707-1.288-.364-.132-.628-.197-.892.197-.264.395-1.024 1.288-1.256 1.553-.232.264-.463.297-.858.099-.395-.197-1.669-.615-3.178-1.96-1.175-1.047-1.968-2.34-2.199-2.735-.232-.395-.025-.608.173-.805.177-.177.395-.463.593-.694.197-.232.264-.395.395-.66.132-.264.066-.495-.033-.693-.099-.198-.892-2.152-1.223-2.947-.321-.777-.647-.671-.892-.684-.232-.013-.495-.013-.759-.013s-.694.099-1.057.495c-.364.395-1.387 1.355-1.387 3.309s1.42 3.838 1.617 4.103c.197.264 2.786 4.256 6.751 5.968.943.407 1.679.65 2.252.832.946.3 1.805.257 2.486.156.758-.113 2.343-.958 2.673-1.882.33-.924.33-1.717.232-1.882-.099-.165-.363-.264-.759-.462z"/>
                           </svg>
-                          Unirme al Grupo
+                          Unirme a la Lista de Espera
                         </a>
+
+                        <p className="text-xs text-foreground/60 mt-4">
+                          +1,500 personas ya están en la lista
+                        </p>
                       </div>
                     </div>
                   )}
 
                   <Link
                     href="/"
-                    className="inline-flex items-center gap-2 h-12 px-8 bg-primary text-white rounded-xl font-bold hover:bg-primary/90 transition-all"
+                    className="inline-flex items-center gap-2 h-12 px-8 border-2 border-border text-foreground rounded-xl font-bold hover:border-primary transition-all"
                   >
                     Volver al Inicio
                   </Link>
