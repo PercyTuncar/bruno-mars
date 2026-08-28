@@ -28,13 +28,16 @@
       "Bash(git commit -m 'Fix: Configure for Cloudflare Pages static export *)",
       "Bash(git commit -m 'Add .nopennext to disable OpenNext auto-detection *)",
       "WebFetch(domain:developers.cloudflare.com)",
-      "Bash(git commit -m 'Fix: Remove .nopennext and update deploy guide with correct solution *)"
+      "Bash(git commit -m 'Fix: Remove .nopennext and update deploy guide with correct solution *)",
+      "Bash(cp \"favicon_io bruno\"/*.png public/ && cp \"favicon_io bruno\"/favicon.ico public/)",
+      "Bash(git commit -m 'Add proper favicon implementation from favicon_io bruno *)"
     ],
     "additionalDirectories": [
       "c:\\Users\\tunca\\.claude\\projects\\c--Users-tunca-OneDrive-Desktop-Github-bruno-mars\\memory",
       "C:\\Users\\tunca\\OneDrive\\Desktop\\Github\\bruno-mars\\app\\[pais]\\entradas",
       "C:\\Users\\tunca\\OneDrive\\Desktop\\Github\\bruno-mars\\app\\[pais]",
-      "c:\\Users\\tunca\\OneDrive\\Desktop\\Github\\bruno-mars\\app\\[pais]\\entradas"
+      "c:\\Users\\tunca\\OneDrive\\Desktop\\Github\\bruno-mars\\app\\[pais]\\entradas",
+      "C:\\Users\\tunca\\OneDrive\\Desktop\\Github\\bruno-mars\\favicon_io bruno"
     ]
   }
 }
