@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { isValidCountry, type CountrySlug, getCountryConfig } from '@/data/countries.config'
+import { isValidCountry, type CountrySlug, getCountryConfig, COUNTRY_SLUGS } from '@/data/countries.config'
 import { getCountryData } from '@/data/countries'
 import { getCountryZones } from '@/data/zones'
 import { getCountryTicketsMetadata } from '@/lib/seo/metadata'
@@ -8,6 +8,17 @@ import { buildCountryEventSchema, buildBreadcrumbSchema } from '@/lib/seo/jsonld
 import { Navbar } from '@/components/layout/Navbar'
 import { TicketsPageClient } from '@/components/tickets/TicketsPageClient'
 import { WhatsAppModal } from '@/components/modals/WhatsAppModal'
+
+export async function generateStaticParams() {
+  // Generar todas las combinaciones de país + ticketsSlug
+  return COUNTRY_SLUGS.map(slug => {
+    const config = getCountryConfig(slug)
+    return {
+      pais: slug,
+      ticketsSlug: config.ticketsSlug
+    }
+  })
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ pais: string; ticketsSlug: string }> }) {
   const { pais } = await params

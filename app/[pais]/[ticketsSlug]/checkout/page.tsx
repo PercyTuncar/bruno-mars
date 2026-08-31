@@ -14,8 +14,19 @@ import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { Navbar } from '@/components/layout/Navbar'
 import { CheckCircle2, User, CreditCard, ShieldCheck, ArrowRight, ArrowLeft, Clock, MessageCircle } from 'lucide-react'
-import { isValidCountry, type CountrySlug, getCountryConfig } from '@/data/countries.config'
+import { isValidCountry, type CountrySlug, getCountryConfig, COUNTRY_SLUGS } from '@/data/countries.config'
 import { getWhatsAppGroupUrl } from '@/data/whatsapp.config'
+
+// Para static export
+export function generateStaticParams() {
+  return COUNTRY_SLUGS.map(slug => {
+    const config = getCountryConfig(slug)
+    return {
+      pais: slug,
+      ticketsSlug: config.ticketsSlug
+    }
+  })
+}
 
 const STEPS = [
   { id: 1, name: 'Datos', namePt: 'Dados', icon: User },
