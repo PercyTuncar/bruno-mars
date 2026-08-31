@@ -31,14 +31,21 @@
       "Bash(git commit -m 'Fix: Remove .nopennext and update deploy guide with correct solution *)",
       "Bash(cp \"favicon_io bruno\"/*.png public/ && cp \"favicon_io bruno\"/favicon.ico public/)",
       "Bash(git commit -m 'Add proper favicon implementation from favicon_io bruno *)",
-      "WebFetch(domain:developers.google.com)"
+      "WebFetch(domain:developers.google.com)",
+      "Bash(mkdir -p \"app/[pais]/[ticketsSlug]\")",
+      "Bash(cp \"app/[pais]/entradas/page.tsx\" \"app/[pais]/[ticketsSlug]/page.tsx\")",
+      "Bash(mkdir -p \"app/[pais]/[ticketsSlug]/checkout\")",
+      "Bash(cp \"app/[pais]/entradas/checkout/page.tsx\" \"app/[pais]/[ticketsSlug]/checkout/page.tsx\")",
+      "Bash(rm -rf \"app/[pais]/entradas\")"
     ],
     "additionalDirectories": [
       "c:\\Users\\tunca\\.claude\\projects\\c--Users-tunca-OneDrive-Desktop-Github-bruno-mars\\memory",
       "C:\\Users\\tunca\\OneDrive\\Desktop\\Github\\bruno-mars\\app\\[pais]\\entradas",
       "C:\\Users\\tunca\\OneDrive\\Desktop\\Github\\bruno-mars\\app\\[pais]",
       "c:\\Users\\tunca\\OneDrive\\Desktop\\Github\\bruno-mars\\app\\[pais]\\entradas",
-      "C:\\Users\\tunca\\OneDrive\\Desktop\\Github\\bruno-mars\\favicon_io bruno"
+      "C:\\Users\\tunca\\OneDrive\\Desktop\\Github\\bruno-mars\\favicon_io bruno",
+      "C:\\Users\\tunca\\OneDrive\\Desktop\\Github\\bruno-mars\\app\\[pais]\\[ticketsSlug]",
+      "C:\\Users\\tunca\\OneDrive\\Desktop\\Github\\bruno-mars\\app\\[pais]\\entradas\\checkout"
     ]
   }
 }

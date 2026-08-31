@@ -9,7 +9,7 @@ import { Navbar } from '@/components/layout/Navbar'
 import { TicketsPageClient } from '@/components/tickets/TicketsPageClient'
 import { WhatsAppModal } from '@/components/modals/WhatsAppModal'
 
-export async function generateMetadata({ params }: { params: Promise<{ pais: string }> }) {
+export async function generateMetadata({ params }: { params: Promise<{ pais: string; ticketsSlug: string }> }) {
   const { pais } = await params
   if (!isValidCountry(pais)) return {}
   return getCountryTicketsMetadata(pais as CountrySlug)
@@ -17,12 +17,18 @@ export async function generateMetadata({ params }: { params: Promise<{ pais: str
 
 export const revalidate = 300
 
-export default async function TicketsPage({ params }: { params: Promise<{ pais: string }> }) {
-  const { pais } = await params
+export default async function TicketsPage({ params }: { params: Promise<{ pais: string; ticketsSlug: string }> }) {
+  const { pais, ticketsSlug } = await params
+
+  // Validar que el país exista
   if (!isValidCountry(pais)) notFound()
 
   const countrySlug = pais as CountrySlug
   const config = getCountryConfig(countrySlug)
+
+  // Validar que el ticketsSlug coincida con el configurado para este país
+  if (ticketsSlug !== config.ticketsSlug) notFound()
+
   const data = getCountryData(countrySlug)
   const zonesData = getCountryZones(countrySlug)
   const zones = zonesData.zones
@@ -35,7 +41,7 @@ export default async function TicketsPage({ params }: { params: Promise<{ pais: 
       <JsonLd data={buildBreadcrumbSchema([
         { name: 'Home', url: baseUrl },
         { name: config.name, url: `${baseUrl}/${countrySlug}` },
-        { name: 'Entradas', url: `${baseUrl}/${countrySlug}/${config.ticketsSlug}` },
+        { name: config.language === 'pt' ? 'Ingressos' : 'Entradas', url: `${baseUrl}/${countrySlug}/${config.ticketsSlug}` },
       ])} />
       <Navbar />
       <WhatsAppModal
@@ -52,14 +58,4 @@ export default async function TicketsPage({ params }: { params: Promise<{ pais: 
       />
     </>
   )
-}
-
-export async function generateStaticParams() {
-  return [
-    { pais: 'peru' },
-    { pais: 'chile' },
-    { pais: 'argentina' },
-    { pais: 'colombia' },
-    { pais: 'brasil' },
-  ]
 }
