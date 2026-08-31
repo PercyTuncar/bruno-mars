@@ -5,8 +5,21 @@
 
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
+import { ConcertHero } from './ConcertHero'
+import { CountrySchedule } from './CountrySchedule'
+import { ConfirmedCountries } from './ConfirmedCountries'
+import { PossibleCountries } from './PossibleCountries'
+import { TicketZones } from './TicketZones'
+import { FAQ } from './FAQ'
 
 export const MDXComponents = {
+  // Componentes personalizados para el blog
+  ConcertHero,
+  CountrySchedule,
+  ConfirmedCountries,
+  PossibleCountries,
+  TicketZones,
+  FAQ,
   h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h1
       className={cn(

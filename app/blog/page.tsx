@@ -1,15 +1,19 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getAllPosts } from '@/lib/blog'
-import { BlogCard } from '@/components/blog/BlogCard'
-import { ThemeToggle } from '@/components/layout/ThemeToggle'
+import { Navbar } from '@/components/layout/Navbar'
 import { JsonLd } from '@/components/seo/JsonLd'
+import { BlogHero } from '@/components/blog/BlogHero'
+import { FeaturedPost } from '@/components/blog/FeaturedPost'
+import { BlogGrid } from '@/components/blog/BlogGrid'
+import { BlogCategories } from '@/components/blog/BlogCategories'
+import { NewsletterCTA } from '@/components/blog/NewsletterCTA'
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://brunomars.lat'
 
 export const metadata: Metadata = {
-  title: 'Blog - Bruno Mars LATAM | Noticias y Guías del Tour',
-  description: 'Mantente informado sobre Bruno Mars The Romantic Tour 2027 en Latinoamérica. Fechas, venues, guías de compra y más.',
+  title: 'Blog - Bruno Mars LATAM | Noticias, Guías y Actualizaciones del Tour',
+  description: 'Mantente informado sobre Bruno Mars The Romantic Tour 2027 en Latinoamérica. Noticias exclusivas, guías de compra, análisis de venues y todo sobre los conciertos.',
   alternates: {
     canonical: `${BASE_URL}/blog`,
   },
@@ -18,6 +22,20 @@ export const metadata: Metadata = {
     description: 'Noticias, guías y actualizaciones sobre The Romantic Tour 2027',
     url: `${BASE_URL}/blog`,
     type: 'website',
+    images: [
+      {
+        url: `${BASE_URL}/images/blog/og-blog.jpg`,
+        width: 1200,
+        height: 630,
+        alt: 'Blog Bruno Mars LATAM',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Blog - Bruno Mars LATAM',
+    description: 'Noticias, guías y actualizaciones sobre The Romantic Tour 2027',
+    images: [`${BASE_URL}/images/blog/og-blog.jpg`],
   },
 }
 
@@ -28,25 +46,34 @@ export const revalidate = 3600
 
 export default function BlogIndexPage() {
   const posts = getAllPosts()
-  const [featuredPost, ...regularPosts] = posts
+  const [featuredPost, ...otherPosts] = posts
+
+  // Categorías disponibles
+  const categories = [
+    { name: 'Todas', slug: 'all', count: posts.length },
+    { name: 'Conciertos', slug: 'conciertos', count: posts.filter(p => p.category === 'Conciertos').length },
+    { name: 'Noticias', slug: 'noticias', count: posts.filter(p => p.category === 'Noticias').length },
+    { name: 'Guías', slug: 'guias', count: posts.filter(p => p.category === 'Guías').length },
+  ]
 
   // JSON-LD para ItemList
   const blogListSchema = {
     '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    itemListElement: posts.map((post, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      item: {
-        '@type': 'BlogPosting',
-        headline: post.title,
-        datePublished: post.date,
-        author: {
-          '@type': 'Person',
-          name: post.author,
-        },
-        url: `${BASE_URL}/blog/${post.slug}`,
+    '@type': 'Blog',
+    name: 'Blog Bruno Mars LATAM',
+    description: 'Noticias, guías y actualizaciones sobre Bruno Mars The Romantic Tour 2027 en Latinoamérica',
+    url: `${BASE_URL}/blog`,
+    blogPost: posts.map((post) => ({
+      '@type': 'BlogPosting',
+      headline: post.title,
+      description: post.description,
+      datePublished: post.date,
+      author: {
+        '@type': 'Organization',
+        name: post.author,
       },
+      url: `${BASE_URL}/blog/${post.slug}`,
+      image: `${BASE_URL}${post.image}`,
     })),
   }
 
@@ -54,75 +81,139 @@ export default function BlogIndexPage() {
     <>
       <JsonLd data={blogListSchema} />
 
-      <div className="min-h-screen flex flex-col">
-        {/* Navbar */}
-        <header className="border-b glass sticky top-0 z-50">
-          <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-            <Link href="/" className="text-xl font-serif font-bold hover:text-primary transition-colors">
-              Bruno Mars LATAM
-            </Link>
-            <div className="flex items-center gap-4">
+      <Navbar />
+
+      <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
+        {/* Hero Section */}
+        <BlogHero />
+
+        {/* Main Content */}
+        <main className="max-w-7xl mx-auto px-6 lg:px-20 pb-20">
+          {posts.length === 0 ? (
+            // Estado vacío
+            <div className="text-center py-24">
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-muted/50 mb-6">
+                <span className="text-4xl">📝</span>
+              </div>
+              <h2 className="text-2xl font-bold mb-4">Próximamente: Nuevos Artículos</h2>
+              <p className="text-lg text-muted-foreground mb-8 max-w-md mx-auto">
+                Estamos preparando contenido exclusivo sobre el tour, guías de venues y más.
+              </p>
               <Link
                 href="/"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors hidden md:inline"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-full font-semibold hover:bg-primary/90 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
               >
-                Inicio
+                Volver al Inicio
               </Link>
-              <ThemeToggle />
             </div>
-          </div>
-        </header>
+          ) : (
+            <>
+              {/* Categories Filter */}
+              <BlogCategories categories={categories} />
 
-        <main className="flex-1">
-          <div className="container mx-auto px-4 py-12 md:py-16">
-            {/* Header */}
-            <div className="mb-12 text-center">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4">
-                Blog
-              </h1>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Noticias, guías y todo lo que necesitas saber sobre Bruno Mars The Romantic Tour 2027 en Latinoamérica
-              </p>
-            </div>
-
-            {posts.length === 0 ? (
-              <div className="text-center py-16">
-                <p className="text-lg text-muted-foreground mb-6">
-                  Próximamente: Artículos sobre el tour, guías de venues y más
-                </p>
-                <Link
-                  href="/"
-                  className="inline-block px-6 py-3 bg-primary text-primary-foreground rounded-md font-medium hover:bg-primary/90 transition-colors"
-                >
-                  Volver al Inicio
-                </Link>
-              </div>
-            ) : (
-              <>
-                {/* Post destacado */}
-                {featuredPost && (
-                  <div className="mb-12">
-                    <BlogCard post={featuredPost} featured />
+              {/* Featured Post */}
+              {featuredPost && (
+                <div className="mb-16">
+                  <div className="flex items-center gap-3 mb-8">
+                    <div className="flex items-center gap-2">
+                      <span className="text-2xl">⭐</span>
+                      <h2 className="text-2xl font-bold">Destacado</h2>
+                    </div>
+                    <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent" />
                   </div>
-                )}
+                  <FeaturedPost post={featuredPost} />
+                </div>
+              )}
 
-                {/* Grid de posts */}
-                {regularPosts.length > 0 && (
-                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {regularPosts.map((post) => (
-                      <BlogCard key={post.slug} post={post} />
-                    ))}
+              {/* Blog Grid */}
+              {otherPosts.length > 0 && (
+                <div>
+                  <div className="flex items-center gap-3 mb-8">
+                    <div className="flex items-center gap-2">
+                      <span className="text-2xl">📰</span>
+                      <h2 className="text-2xl font-bold">Últimas Noticias</h2>
+                    </div>
+                    <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent" />
                   </div>
-                )}
-              </>
-            )}
-          </div>
+                  <BlogGrid posts={otherPosts} />
+                </div>
+              )}
+
+              {/* Newsletter CTA */}
+              <NewsletterCTA />
+            </>
+          )}
         </main>
 
         {/* Footer */}
-        <footer className="border-t py-8 mt-16">
-          <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
-            <p>&copy; 2027 Bruno Mars LATAM. Todos los derechos reservados.</p>
+        <footer className="border-t bg-card/50 backdrop-blur-sm">
+          <div className="max-w-7xl mx-auto px-6 lg:px-20 py-12">
+            <div className="grid md:grid-cols-3 gap-8 mb-8">
+              {/* About */}
+              <div>
+                <h3 className="font-bold mb-4">Sobre Bruno Mars LATAM</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Tu fuente oficial de información sobre Bruno Mars The Romantic Tour 2027 en Latinoamérica.
+                </p>
+              </div>
+
+              {/* Links */}
+              <div>
+                <h3 className="font-bold mb-4">Enlaces Rápidos</h3>
+                <ul className="space-y-2 text-sm">
+                  <li>
+                    <Link href="/" className="text-muted-foreground hover:text-primary transition-colors">
+                      Inicio
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/blog" className="text-muted-foreground hover:text-primary transition-colors">
+                      Blog
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/#paises" className="text-muted-foreground hover:text-primary transition-colors">
+                      Países
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Social */}
+              <div>
+                <h3 className="font-bold mb-4">Síguenos</h3>
+                <div className="flex gap-3">
+                  <a
+                    href="https://instagram.com/brunomars"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 rounded-full bg-muted/50 hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-all duration-300 hover:scale-110"
+                  >
+                    <span className="text-lg">📸</span>
+                  </a>
+                  <a
+                    href="https://twitter.com/brunomars"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 rounded-full bg-muted/50 hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-all duration-300 hover:scale-110"
+                  >
+                    <span className="text-lg">𝕏</span>
+                  </a>
+                  <a
+                    href="https://facebook.com/brunomars"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 rounded-full bg-muted/50 hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-all duration-300 hover:scale-110"
+                  >
+                    <span className="text-lg">📘</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-8 border-t text-center text-sm text-muted-foreground">
+              <p>&copy; 2027 Bruno Mars LATAM. Todos los derechos reservados.</p>
+            </div>
           </div>
         </footer>
       </div>

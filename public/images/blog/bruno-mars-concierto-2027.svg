@@ -1,0 +1,76 @@
+<svg width="1200" height="675" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B5CF6;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#EC4899;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F97316;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="overlay-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#000000;stop-opacity:0" />
+      <stop offset="100%" style="stop-color:#000000;stop-opacity:0.6" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background gradient -->
+  <rect width="1200" height="675" fill="url(#bg-gradient)"/>
+
+  <!-- Overlay gradient -->
+  <rect width="1200" height="675" fill="url(#overlay-gradient)"/>
+
+  <!-- Decorative circles -->
+  <circle cx="200" cy="150" r="120" fill="#FFFFFF" opacity="0.05"/>
+  <circle cx="1000" cy="500" r="150" fill="#FFFFFF" opacity="0.05"/>
+  <circle cx="600" cy="400" r="80" fill="#FFFFFF" opacity="0.08"/>
+
+  <!-- Main content -->
+  <g filter="url(#glow)">
+    <!-- Microphone icon -->
+    <g transform="translate(500, 150)">
+      <rect x="90" y="0" width="20" height="100" rx="10" fill="#FFFFFF"/>
+      <circle cx="100" cy="110" r="30" fill="#FFFFFF" opacity="0.8"/>
+      <line x1="100" y1="140" x2="100" y2="180" stroke="#FFFFFF" stroke-width="4"/>
+      <line x1="80" y1="180" x2="120" y2="180" stroke="#FFFFFF" stroke-width="4"/>
+    </g>
+
+    <!-- Title -->
+    <text x="600" y="320" font-family="Arial, sans-serif" font-size="64" font-weight="bold" fill="#FFFFFF" text-anchor="middle">
+      BRUNO MARS
+    </text>
+    <text x="600" y="380" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="#FFFFFF" text-anchor="middle">
+      EN CONCIERTO
+    </text>
+
+    <!-- Subtitle -->
+    <text x="600" y="440" font-family="Arial, sans-serif" font-size="32" fill="#FFFFFF" text-anchor="middle" opacity="0.9">
+      Gira Latinoamérica 2027
+    </text>
+
+    <!-- Countries -->
+    <g transform="translate(0, 500)">
+      <text x="200" y="30" font-family="Arial, sans-serif" font-size="28" fill="#FFFFFF" text-anchor="middle">🇨🇱</text>
+      <text x="360" y="30" font-family="Arial, sans-serif" font-size="28" fill="#FFFFFF" text-anchor="middle">🇵🇪</text>
+      <text x="520" y="30" font-family="Arial, sans-serif" font-size="28" fill="#FFFFFF" text-anchor="middle">🇦🇷</text>
+      <text x="680" y="30" font-family="Arial, sans-serif" font-size="28" fill="#FFFFFF" text-anchor="middle">🇧🇷</text>
+      <text x="840" y="30" font-family="Arial, sans-serif" font-size="28" fill="#FFFFFF" text-anchor="middle">🇨🇴</text>
+
+      <text x="200" y="70" font-family="Arial, sans-serif" font-size="18" fill="#FFFFFF" text-anchor="middle" opacity="0.8">Chile</text>
+      <text x="360" y="70" font-family="Arial, sans-serif" font-size="18" fill="#FFFFFF" text-anchor="middle" opacity="0.8">Perú</text>
+      <text x="520" y="70" font-family="Arial, sans-serif" font-size="18" fill="#FFFFFF" text-anchor="middle" opacity="0.8">Argentina</text>
+      <text x="680" y="70" font-family="Arial, sans-serif" font-size="18" fill="#FFFFFF" text-anchor="middle" opacity="0.8">Brasil</text>
+      <text x="840" y="70" font-family="Arial, sans-serif" font-size="18" fill="#FFFFFF" text-anchor="middle" opacity="0.8">Colombia</text>
+    </g>
+
+    <!-- Dates badge -->
+    <rect x="480" y="590" width="240" height="50" rx="25" fill="#FFFFFF" opacity="0.2"/>
+    <text x="600" y="622" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#FFFFFF" text-anchor="middle">
+      AGO - DIC 2027
+    </text>
+  </g>
+</svg>
