@@ -39,7 +39,8 @@
       "Bash(rm -rf \"app/[pais]/entradas\")",
       "Bash(curl -I https://brunomars.lat/blog/bruno-mars-en-concierto)",
       "Bash(curl -s https://brunomars.lat/robots.txt)",
-      "Bash(curl -s https://brunomars.lat/sitemap.xml)"
+      "Bash(curl -s https://brunomars.lat/sitemap.xml)",
+      "Bash(git commit -m ' *)"
     ],
     "additionalDirectories": [
       "c:\\Users\\tunca\\.claude\\projects\\c--Users-tunca-OneDrive-Desktop-Github-bruno-mars\\memory",
