@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next'
+import { getAllPosts } from '@/lib/blog'
 
 export const dynamic = 'force-static'
 
@@ -33,14 +34,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   })
 
-  // Páginas de país
+  // Páginas de países
   countries.forEach((country) => {
-    const countryUrl = `${BASE_URL}/${country.slug}`
-
     routes.push({
-      url: countryUrl,
+      url: `${BASE_URL}/${country.slug}`,
       lastModified: new Date(),
-      changeFrequency: 'weekly',
+      changeFrequency: 'daily',
       priority: 0.9,
       alternates: {
         languages: {
@@ -55,7 +54,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })
   })
 
-  // Páginas de entradas
+  // Páginas de entradas/ingressos
   countries.forEach((country) => {
     const ticketsUrl = `${BASE_URL}/${country.slug}/${country.tickets}`
 
@@ -77,12 +76,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })
   })
 
-  // Blog (opcional - agregar cuando existan posts)
+  // Blog - Página principal
   routes.push({
     url: `${BASE_URL}/blog`,
     lastModified: new Date(),
     changeFrequency: 'weekly',
-    priority: 0.5,
+    priority: 0.8,
+  })
+
+  // Blog - Posts individuales
+  const posts = getAllPosts()
+  posts.forEach((post) => {
+    routes.push({
+      url: `${BASE_URL}/blog/${post.slug}`,
+      lastModified: new Date(post.date),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    })
   })
 
   return routes

@@ -36,7 +36,10 @@
       "Bash(cp \"app/[pais]/entradas/page.tsx\" \"app/[pais]/[ticketsSlug]/page.tsx\")",
       "Bash(mkdir -p \"app/[pais]/[ticketsSlug]/checkout\")",
       "Bash(cp \"app/[pais]/entradas/checkout/page.tsx\" \"app/[pais]/[ticketsSlug]/checkout/page.tsx\")",
-      "Bash(rm -rf \"app/[pais]/entradas\")"
+      "Bash(rm -rf \"app/[pais]/entradas\")",
+      "Bash(curl -I https://brunomars.lat/blog/bruno-mars-en-concierto)",
+      "Bash(curl -s https://brunomars.lat/robots.txt)",
+      "Bash(curl -s https://brunomars.lat/sitemap.xml)"
     ],
     "additionalDirectories": [
       "c:\\Users\\tunca\\.claude\\projects\\c--Users-tunca-OneDrive-Desktop-Github-bruno-mars\\memory",
