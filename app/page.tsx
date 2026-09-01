@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { MapPin, ArrowRight, Users, Calendar, Zap, Star } from 'lucide-react'
 import { getHomeMetadata } from '@/lib/seo/metadata'
-import { buildOrganizationSchema, buildItemListSchema } from '@/lib/seo/jsonld'
+import { buildOrganizationSchema, buildItemListSchema, buildWebSiteSchema, buildPersonSchema } from '@/lib/seo/jsonld'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { Navbar } from '@/components/layout/Navbar'
 import { COUNTRY_SLUGS, getCountryConfig } from '@/data/countries.config'
@@ -22,7 +22,9 @@ export default function HomePage() {
 
   return (
     <>
+      <JsonLd data={buildWebSiteSchema()} />
       <JsonLd data={buildOrganizationSchema()} />
+      <JsonLd data={buildPersonSchema()} />
       <JsonLd
         data={buildItemListSchema(
           countries.map((c, index) => ({
@@ -102,6 +104,9 @@ export default function HomePage() {
               <img
                 src="https://www.brunomars.com/sites/g/files/g2000021861/files/2026-04/romtr_hdr.png"
                 alt="Bruno Mars - The Romantic Tour"
+                width={600}
+                height={450}
+                fetchPriority="high"
                 className="w-full h-full object-contain"
               />
             </div>

@@ -4,7 +4,7 @@ import { getCountryData } from '@/data/countries'
 import { getCountryZones } from '@/data/zones'
 import { getCountryTicketsMetadata } from '@/lib/seo/metadata'
 import { JsonLd } from '@/components/seo/JsonLd'
-import { buildCountryEventSchema, buildBreadcrumbSchema } from '@/lib/seo/jsonld'
+import { buildTicketsEventSchema, buildBreadcrumbSchema, buildPersonSchema } from '@/lib/seo/jsonld'
 import { Navbar } from '@/components/layout/Navbar'
 import { TicketsPageClient } from '@/components/tickets/TicketsPageClient'
 import { WhatsAppModal } from '@/components/modals/WhatsAppModal'
@@ -48,7 +48,8 @@ export default async function TicketsPage({ params }: { params: Promise<{ pais: 
 
   return (
     <>
-      <JsonLd data={buildCountryEventSchema(countrySlug)} />
+      <JsonLd data={buildPersonSchema()} />
+      <JsonLd data={buildTicketsEventSchema(countrySlug)} />
       <JsonLd data={buildBreadcrumbSchema([
         { name: 'Home', url: baseUrl },
         { name: config.name, url: `${baseUrl}/${countrySlug}` },

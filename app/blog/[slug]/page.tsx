@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { Calendar, Clock, ArrowLeft, Share2, Bookmark, ChevronRight } from 'lucide-react'
 import { getAllPostSlugs, getPostBySlug, getRelatedPosts } from '@/lib/blog'
+import { getBlogPostMetadata } from '@/lib/seo/metadata'
+import { buildArticleSchema, buildBreadcrumbSchema } from '@/lib/seo/jsonld'
 import { Navbar } from '@/components/layout/Navbar'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { BlogCard } from '@/components/blog/BlogCard'
@@ -40,67 +42,19 @@ export async function generateMetadata({
     }
   }
 
-  return {
+  // Extract reading time as number (e.g., "5 min" -> 5)
+  const readingTimeMatch = post.readingTime.match(/(\d+)/)
+  const readingTimeMinutes = readingTimeMatch ? parseInt(readingTimeMatch[1]) : undefined
+
+  return getBlogPostMetadata({
     title: post.title,
     description: post.description,
-    keywords: post.content.match(/keywords:\s*"([^"]+)"/)?.[1],
-    authors: [{ name: post.author }],
-    creator: post.author,
-    publisher: 'Bruno Mars LATAM',
-    alternates: {
-      canonical: `${BASE_URL}/blog/${slug}`,
-      languages: {
-        'es-ES': `${BASE_URL}/blog/${slug}`,
-        'es': `${BASE_URL}/blog/${slug}`,
-      },
-    },
-    openGraph: {
-      title: post.title,
-      description: post.description,
-      type: 'article',
-      publishedTime: post.date,
-      modifiedTime: post.date,
-      authors: [post.author],
-      section: post.category,
-      tags: post.content.match(/keywords:\s*"([^"]+)"/)?.[1]?.split(',').map(k => k.trim()),
-      images: [
-        {
-          url: post.image.startsWith('http') ? post.image : `${BASE_URL}${post.image}`,
-          width: 1200,
-          height: 675,
-          alt: post.title,
-        },
-      ],
-      url: `${BASE_URL}/blog/${slug}`,
-      siteName: 'Bruno Mars LATAM',
-      locale: 'es_ES',
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: post.title,
-      description: post.description,
-      images: [post.image.startsWith('http') ? post.image : `${BASE_URL}${post.image}`],
-      creator: '@brunomars',
-    },
-    robots: {
-      index: true,
-      follow: true,
-      nocache: false,
-      googleBot: {
-        index: true,
-        follow: true,
-        'max-video-preview': -1,
-        'max-image-preview': 'large',
-        'max-snippet': -1,
-      },
-    },
-    other: {
-      'article:published_time': post.date,
-      'article:modified_time': post.date,
-      'article:author': post.author,
-      'article:section': post.category,
-    },
-  }
+    slug,
+    publishedDate: post.date,
+    modifiedDate: post.date,
+    image: post.image.startsWith('http') ? post.image : `${BASE_URL}${post.image}`,
+    keywords: post.content.match(/keywords:\s*"([^"]+)"/)?.[1]?.split(',').map(k => k.trim()),
+  })
 }
 
 /**
@@ -128,63 +82,27 @@ export default async function BlogPostPage({
     day: 'numeric',
   })
 
-  // JSON-LD Article Schema
-  const articleSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: post.title,
-    description: post.description,
-    image: `${BASE_URL}${post.image}`,
-    datePublished: post.date,
-    dateModified: post.date,
-    author: {
-      '@type': 'Organization',
-      name: post.author,
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: 'Bruno Mars LATAM',
-      logo: {
-        '@type': 'ImageObject',
-        url: `${BASE_URL}/logo.png`,
-      },
-    },
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': `${BASE_URL}/blog/${slug}`,
-    },
-  }
-
-  // Breadcrumb Schema
-  const breadcrumbSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Inicio',
-        item: BASE_URL,
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: 'Blog',
-        item: `${BASE_URL}/blog`,
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: post.title,
-        item: `${BASE_URL}/blog/${slug}`,
-      },
-    ],
-  }
+  // Extract reading time as number
+  const readingTimeMatch = post.readingTime.match(/(\d+)/)
+  const readingTimeMinutes = readingTimeMatch ? parseInt(readingTimeMatch[1]) : undefined
 
   return (
     <>
-      <JsonLd data={articleSchema} />
-      <JsonLd data={breadcrumbSchema} />
+      <JsonLd data={buildArticleSchema({
+        title: post.title,
+        description: post.description,
+        slug,
+        publishedDate: post.date,
+        modifiedDate: post.date,
+        author: post.author,
+        image: post.image.startsWith('http') ? post.image : `${BASE_URL}${post.image}`,
+        readingTime: readingTimeMinutes,
+      })} />
+      <JsonLd data={buildBreadcrumbSchema([
+        { name: 'Inicio', url: BASE_URL },
+        { name: 'Blog', url: `${BASE_URL}/blog` },
+        { name: post.title, url: `${BASE_URL}/blog/${slug}` },
+      ])} />
 
       <ProgressBar />
 

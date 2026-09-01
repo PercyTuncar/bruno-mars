@@ -5,7 +5,7 @@ import { getCountryData } from '@/data/countries'
 import { getCountryContent } from '@/data/content'
 import { getCountryLandingMetadata } from '@/lib/seo/metadata'
 import { JsonLd } from '@/components/seo/JsonLd'
-import { buildCountryEventSchema, buildFAQSchema, buildBreadcrumbSchema } from '@/lib/seo/jsonld'
+import { buildCountryEventSchema, buildFAQSchema, buildBreadcrumbSchema, buildPersonSchema } from '@/lib/seo/jsonld'
 import { Breadcrumbs } from '@/components/seo/Breadcrumbs'
 import { Navbar } from '@/components/layout/Navbar'
 import { WhatsAppModal } from '@/components/modals/WhatsAppModal'
@@ -36,6 +36,7 @@ export default async function CountryPage({ params }: { params: Promise<{ pais: 
 
   return (
     <>
+      <JsonLd data={buildPersonSchema()} />
       <JsonLd data={buildCountryEventSchema(countrySlug)} />
       {faqSchema && <JsonLd data={faqSchema} />}
       <JsonLd data={buildBreadcrumbSchema([
@@ -56,6 +57,9 @@ export default async function CountryPage({ params }: { params: Promise<{ pais: 
           <img
             src="https://mmo.aiircdn.com/766/6960104b7162a.jpg"
             alt="Bruno Mars concert background"
+            width={1920}
+            height={1080}
+            fetchPriority="high"
             className="w-full h-full object-cover"
           />
           {/* Gradient overlay equilibrado */}

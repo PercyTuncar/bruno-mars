@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getAllPosts } from '@/lib/blog'
+import { getBlogIndexMetadata } from '@/lib/seo/metadata'
+import { buildBlogSchema } from '@/lib/seo/jsonld'
 import { Navbar } from '@/components/layout/Navbar'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { BlogHero } from '@/components/blog/BlogHero'
@@ -11,33 +13,7 @@ import { NewsletterCTA } from '@/components/blog/NewsletterCTA'
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://brunomars.lat'
 
-export const metadata: Metadata = {
-  title: 'Blog - Bruno Mars LATAM | Noticias, Guías y Actualizaciones del Tour',
-  description: 'Mantente informado sobre Bruno Mars The Romantic Tour 2027 en Latinoamérica. Noticias exclusivas, guías de compra, análisis de venues y todo sobre los conciertos.',
-  alternates: {
-    canonical: `${BASE_URL}/blog`,
-  },
-  openGraph: {
-    title: 'Blog - Bruno Mars LATAM',
-    description: 'Noticias, guías y actualizaciones sobre The Romantic Tour 2027',
-    url: `${BASE_URL}/blog`,
-    type: 'website',
-    images: [
-      {
-        url: `${BASE_URL}/images/blog/og-blog.jpg`,
-        width: 1200,
-        height: 630,
-        alt: 'Blog Bruno Mars LATAM',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Blog - Bruno Mars LATAM',
-    description: 'Noticias, guías y actualizaciones sobre The Romantic Tour 2027',
-    images: [`${BASE_URL}/images/blog/og-blog.jpg`],
-  },
-}
+export const metadata: Metadata = getBlogIndexMetadata()
 
 /**
  * ISR: Revalidar cada hora para mostrar nuevos posts
@@ -56,30 +32,9 @@ export default function BlogIndexPage() {
     { name: 'Guías', slug: 'guias', count: posts.filter(p => p.category === 'Guías').length },
   ]
 
-  // JSON-LD para ItemList
-  const blogListSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Blog',
-    name: 'Blog Bruno Mars LATAM',
-    description: 'Noticias, guías y actualizaciones sobre Bruno Mars The Romantic Tour 2027 en Latinoamérica',
-    url: `${BASE_URL}/blog`,
-    blogPost: posts.map((post) => ({
-      '@type': 'BlogPosting',
-      headline: post.title,
-      description: post.description,
-      datePublished: post.date,
-      author: {
-        '@type': 'Organization',
-        name: post.author,
-      },
-      url: `${BASE_URL}/blog/${post.slug}`,
-      image: `${BASE_URL}${post.image}`,
-    })),
-  }
-
   return (
     <>
-      <JsonLd data={blogListSchema} />
+      <JsonLd data={buildBlogSchema()} />
 
       <Navbar />
 

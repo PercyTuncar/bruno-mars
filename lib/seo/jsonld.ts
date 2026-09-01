@@ -291,3 +291,169 @@ export function buildItemListSchema(items: Array<{ position: number; name: strin
   }
 }
 
+/**
+ * JSON-LD de WebSite con SearchAction para búsqueda
+ * Permite que Google muestre un search box en los resultados
+ */
+export function buildWebSiteSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Bruno Mars LATAM',
+    url: BASE_URL,
+    description: 'Entradas oficiales para Bruno Mars The Romantic Tour 2027 en Latinoamérica',
+    inLanguage: ['es', 'pt-BR'],
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${BASE_URL}/blog?q={search_term_string}`,
+      },
+      'query-input': 'required name=search_term_string',
+    },
+  }
+}
+
+/**
+ * JSON-LD de Person para Bruno Mars
+ * Establece autoridad y E-E-A-T
+ */
+export function buildPersonSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    '@id': 'https://www.wikidata.org/wiki/Q1450',
+    name: 'Bruno Mars',
+    alternateName: 'Peter Gene Hernandez',
+    jobTitle: 'Singer, Songwriter, Record Producer',
+    url: 'https://www.brunomars.com',
+    image: 'https://www.brunomars.com/sites/g/files/g2000021861/files/2026-04/romtr_hdr.png',
+    sameAs: [
+      'https://www.wikidata.org/wiki/Q1450',
+      'https://en.wikipedia.org/wiki/Bruno_Mars',
+      'https://www.instagram.com/brunomars/',
+      'https://www.facebook.com/brunomars',
+      'https://twitter.com/BrunoMars',
+      'https://www.youtube.com/user/brunomars',
+      'https://open.spotify.com/artist/0du5cEVh5yTK9QJze8zA0C',
+    ],
+    description: 'Grammy Award-winning singer, songwriter, and record producer known for hits like "Just the Way You Are", "Uptown Funk", and "24K Magic"',
+    awards: [
+      '15 Grammy Awards',
+      '11 American Music Awards',
+      '4 Brit Awards',
+      'Diamond certifications',
+    ],
+  }
+}
+
+/**
+ * JSON-LD de Article para posts del blog
+ */
+export function buildArticleSchema(params: {
+  title: string
+  description: string
+  slug: string
+  publishedDate: string
+  modifiedDate?: string
+  author?: string
+  image?: string
+  readingTime?: number
+}) {
+  const {
+    title,
+    description,
+    slug,
+    publishedDate,
+    modifiedDate,
+    author = 'Bruno Mars LATAM',
+    image = `${BASE_URL}/images/og/blog-default.jpg`,
+    readingTime,
+  } = params
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: title,
+    description,
+    url: `${BASE_URL}/blog/${slug}`,
+    datePublished: publishedDate,
+    dateModified: modifiedDate || publishedDate,
+    image: {
+      '@type': 'ImageObject',
+      url: image,
+      width: 1200,
+      height: 630,
+    },
+    author: {
+      '@type': 'Organization',
+      name: author,
+      url: BASE_URL,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Bruno Mars LATAM',
+      url: BASE_URL,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${BASE_URL}/images/logo.png`,
+        width: 512,
+        height: 512,
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${BASE_URL}/blog/${slug}`,
+    },
+    ...(readingTime && {
+      timeRequired: `PT${readingTime}M`,
+    }),
+  }
+}
+
+/**
+ * JSON-LD de ImageObject para imágenes principales
+ */
+export function buildImageObjectSchema(params: {
+  url: string
+  width: number
+  height: number
+  caption?: string
+  description?: string
+}) {
+  const { url, width, height, caption, description } = params
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ImageObject',
+    contentUrl: url,
+    url,
+    width,
+    height,
+    ...(caption && { caption }),
+    ...(description && { description }),
+    encodingFormat: url.endsWith('.jpg') || url.endsWith('.jpeg') ? 'image/jpeg' : url.endsWith('.png') ? 'image/png' : 'image/webp',
+  }
+}
+
+/**
+ * JSON-LD de AggregateRating (para cuando tengamos reviews)
+ */
+export function buildAggregateRatingSchema(params: {
+  ratingValue: number
+  reviewCount: number
+  bestRating?: number
+  worstRating?: number
+}) {
+  const { ratingValue, reviewCount, bestRating = 5, worstRating = 1 } = params
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'AggregateRating',
+    ratingValue: ratingValue.toFixed(1),
+    reviewCount,
+    bestRating,
+    worstRating,
+  }
+}
+
