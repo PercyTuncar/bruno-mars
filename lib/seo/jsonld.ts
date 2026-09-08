@@ -204,6 +204,7 @@ export function buildFAQSchema(countrySlug: CountrySlug) {
 
 /**
  * JSON-LD de BreadcrumbList
+ * Corregido: item debe ser un objeto con @id según schema.org
  */
 export function buildBreadcrumbSchema(items: Array<{ name: string; url: string }>) {
   return {
@@ -212,45 +213,48 @@ export function buildBreadcrumbSchema(items: Array<{ name: string; url: string }
     itemListElement: items.map((item, index) => ({
       '@type': 'ListItem',
       position: index + 1,
-      name: item.name,
-      item: item.url,
+      item: {
+        '@type': 'WebPage',
+        '@id': item.url,
+        name: item.name,
+      },
     })),
   }
 }
 
 /**
  * JSON-LD de ItemList para la Home (listado de eventos)
+ * Corregido: cada item debe tener @id y estructura correcta
  */
 export function buildHomeEventsListSchema() {
   const countries: CountrySlug[] = ['peru', 'chile', 'argentina', 'colombia', 'brasil']
 
-  const events = countries.map((slug) => {
-    const data = getCountryData(slug)
-    return {
-      '@type': 'MusicEvent',
-      name: `Bruno Mars - The Romantic Tour (${data.name})`,
-      url: `${BASE_URL}/${slug}`,
-      startDate: `${data.dates[0].date}T${data.dates[0].time}:00${getTimezoneOffset(data.dates[0].timezone)}`,
-      location: {
-        '@type': 'Place',
-        name: data.venue.name,
-        address: {
-          '@type': 'PostalAddress',
-          addressLocality: data.venue.address.city,
-          addressCountry: data.venue.address.country,
-        },
-      },
-    }
-  })
-
   return {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    itemListElement: events.map((event, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      item: event,
-    })),
+    itemListElement: countries.map((slug, index) => {
+      const data = getCountryData(slug)
+      return {
+        '@type': 'ListItem',
+        position: index + 1,
+        item: {
+          '@type': 'MusicEvent',
+          '@id': `${BASE_URL}/${slug}`,
+          name: `Bruno Mars - The Romantic Tour (${data.name})`,
+          url: `${BASE_URL}/${slug}`,
+          startDate: `${data.dates[0].date}T${data.dates[0].time}:00${getTimezoneOffset(data.dates[0].timezone)}`,
+          location: {
+            '@type': 'Place',
+            name: data.venue.name,
+            address: {
+              '@type': 'PostalAddress',
+              addressLocality: data.venue.address.city,
+              addressCountry: data.venue.address.country,
+            },
+          },
+        },
+      }
+    }),
   }
 }
 
@@ -277,6 +281,7 @@ export function buildBlogSchema() {
 
 /**
  * JSON-LD ItemList para listados
+ * Corregido: item debe ser un objeto con @id según schema.org
  */
 export function buildItemListSchema(items: Array<{ position: number; name: string; url: string }>) {
   return {
@@ -285,8 +290,12 @@ export function buildItemListSchema(items: Array<{ position: number; name: strin
     itemListElement: items.map((item) => ({
       '@type': 'ListItem',
       position: item.position,
-      name: item.name,
-      url: item.url,
+      item: {
+        '@type': 'Thing',
+        '@id': item.url,
+        name: item.name,
+        url: item.url,
+      },
     })),
   }
 }

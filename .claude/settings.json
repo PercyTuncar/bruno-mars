@@ -46,7 +46,19 @@
       "Bash(curl -I https://brunomars.lat/argentina/entradas)",
       "Bash(curl -s https://brunomars.lat/argentina/entradas)",
       "Bash(curl -s https://brunomars.lat/)",
-      "Bash(curl -s https://brunomars.lat/argentina)"
+      "Bash(curl -s https://brunomars.lat/argentina)",
+      "Bash(git commit -m 'fix: add direct internal links to tickets pages for better SEO crawling *)",
+      "Bash(curl -s \"https://www.google.com/search?q=site:brunomars.lat\")",
+      "Bash(curl -I https://brunomars.lat)",
+      "Bash(whois brunomars.lat)",
+      "Bash(curl -A \"Googlebot/2.1 \\(+http://www.google.com/bot.html\\)\" -s https://brunomars.lat/)",
+      "Bash(curl -s https://brunomars.lat/ -I)",
+      "WebFetch(domain:somethinginc.com)",
+      "WebFetch(domain:www.billhartzer.com)",
+      "WebFetch(domain:www.seroundtable.com)",
+      "Bash(curl -A \"Googlebot/2.1 \\(+http://www.google.com/bot.html\\)\" -I https://brunomars.lat/)",
+      "Bash(curl -A \"Mozilla/5.0\" -I https://brunomars.lat/)",
+      "WebFetch(domain:stackoverflow.com)"
     ],
     "additionalDirectories": [
       "c:\\Users\\tunca\\.claude\\projects\\c--Users-tunca-OneDrive-Desktop-Github-bruno-mars\\memory",
