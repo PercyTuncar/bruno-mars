@@ -15,11 +15,6 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://brunomars.lat'
 
 export const metadata: Metadata = getBlogIndexMetadata()
 
-/**
- * ISR: Revalidar cada hora para mostrar nuevos posts
- */
-export const revalidate = 3600
-
 export default function BlogIndexPage() {
   const posts = getAllPosts()
   const [featuredPost, ...otherPosts] = posts

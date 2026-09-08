@@ -26,8 +26,6 @@ export async function generateMetadata({ params }: { params: Promise<{ pais: str
   return getCountryTicketsMetadata(pais as CountrySlug)
 }
 
-export const revalidate = 300
-
 export default async function TicketsPage({ params }: { params: Promise<{ pais: string; ticketsSlug: string }> }) {
   const { pais, ticketsSlug } = await params
 

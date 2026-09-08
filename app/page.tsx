@@ -8,7 +8,6 @@ import { Navbar } from '@/components/layout/Navbar'
 import { COUNTRY_SLUGS, getCountryConfig } from '@/data/countries.config'
 
 export const metadata: Metadata = getHomeMetadata()
-export const revalidate = 3600
 
 export default function HomePage() {
   const countries = COUNTRY_SLUGS.map((slug) => {
@@ -128,9 +127,8 @@ export default function HomePage() {
           {/* Grid compacto */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {countries.map((country) => (
-              <Link
+              <div
                 key={country.slug}
-                href={`/${country.slug}`}
                 className="group relative bg-card p-6 rounded-xl border border-border hover:border-primary/50 transition-all duration-300 hover:-translate-y-1"
               >
                 {/* Flag emoji grande */}
@@ -144,7 +142,9 @@ export default function HomePage() {
 
                 {/* Nombre */}
                 <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
-                  {country.name}
+                  <Link href={`/${country.slug}`} className="hover:underline">
+                    {country.name}
+                  </Link>
                 </h3>
 
                 {/* Info */}
@@ -152,12 +152,15 @@ export default function HomePage() {
                   Septiembre 2027 • Ver fechas
                 </p>
 
-                {/* CTA */}
-                <div className="flex items-center justify-between pt-3 border-t border-border/50">
-                  <span className="text-sm font-semibold text-primary">Ver entradas</span>
-                  <ArrowRight className="h-4 w-4 text-primary group-hover:translate-x-1 transition-transform" />
-                </div>
-              </Link>
+                {/* CTA - Enlace directo a entradas */}
+                <Link
+                  href={`/${country.slug}/${country.ticketsSlug}`}
+                  className="flex items-center justify-between pt-3 border-t border-border/50 group/cta"
+                >
+                  <span className="text-sm font-semibold text-primary group-hover/cta:underline">Ver entradas</span>
+                  <ArrowRight className="h-4 w-4 text-primary group-hover/cta:translate-x-1 transition-transform" />
+                </Link>
+              </div>
             ))}
           </div>
         </div>
@@ -293,7 +296,7 @@ export default function HomePage() {
       {/* Footer compacto */}
       <footer className="border-t py-12 bg-card/30">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center gap-2 mb-3">
                 <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
@@ -316,6 +319,22 @@ export default function HomePage() {
                   <li key={country.slug}>
                     <Link
                       href={`/${country.slug}`}
+                      className="text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      {country.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-bold text-sm mb-3">Comprar Entradas</h4>
+              <ul className="space-y-2 text-xs">
+                {countries.map((country) => (
+                  <li key={`tickets-${country.slug}`}>
+                    <Link
+                      href={`/${country.slug}/${country.ticketsSlug}`}
                       className="text-muted-foreground hover:text-primary transition-colors"
                     >
                       {country.name}

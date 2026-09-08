@@ -19,8 +19,6 @@ export async function generateMetadata({ params }: { params: Promise<{ pais: str
   return getCountryLandingMetadata(pais as CountrySlug)
 }
 
-export const revalidate = 3600
-
 export default async function CountryPage({ params }: { params: Promise<{ pais: string }> }) {
   const { pais } = await params
   if (!isValidCountry(pais)) notFound()

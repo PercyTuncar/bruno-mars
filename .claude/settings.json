@@ -40,7 +40,13 @@
       "Bash(curl -I https://brunomars.lat/blog/bruno-mars-en-concierto)",
       "Bash(curl -s https://brunomars.lat/robots.txt)",
       "Bash(curl -s https://brunomars.lat/sitemap.xml)",
-      "Bash(git commit -m ' *)"
+      "Bash(git commit -m ' *)",
+      "WebFetch(domain:yusufhansacak.medium.com)",
+      "WebFetch(domain:www.onely.com)",
+      "Bash(curl -I https://brunomars.lat/argentina/entradas)",
+      "Bash(curl -s https://brunomars.lat/argentina/entradas)",
+      "Bash(curl -s https://brunomars.lat/)",
+      "Bash(curl -s https://brunomars.lat/argentina)"
     ],
     "additionalDirectories": [
       "c:\\Users\\tunca\\.claude\\projects\\c--Users-tunca-OneDrive-Desktop-Github-bruno-mars\\memory",
